@@ -1,3 +1,4 @@
+import java.util.Properties
 import org.gradle.api.artifacts.VersionCatalogsExtension
 
 plugins {
@@ -8,6 +9,11 @@ plugins {
 
 val catalog = extensions.getByType<VersionCatalogsExtension>().named("libs")
 
+val localProps = Properties().also { props ->
+    val f = rootProject.file("local.properties")
+    if (f.exists()) props.load(f.inputStream())
+}
+
 android {
     namespace = "com.template.android"
 
@@ -15,6 +21,9 @@ android {
         applicationId = "com.template.android"
         versionCode = 1
         versionName = "1.0"
+        // Inject secrets from local.properties — never hardcode keys in source.
+        // Add your key to local.properties: api.key=<value>
+        buildConfigField("String", "API_KEY", "\"${localProps.getProperty("api.key", "")}\"")
     }
 
     buildTypes {
@@ -46,6 +55,8 @@ dependencies {
     implementation(project(":core:core-ui"))
     implementation(project(":core:core-common"))
     implementation(project(":core:core-network"))
+    implementation(project(":core:core-datastore"))
+    implementation(project(":layer:layer-data"))
     implementation(project(":feature:feature-home"))
 
     implementation(catalog.findLibrary("timber").get())

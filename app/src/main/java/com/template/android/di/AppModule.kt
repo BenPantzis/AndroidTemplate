@@ -1,6 +1,7 @@
 package com.template.android.di
 
 import com.template.android.BuildConfig
+import com.template.android.core.data.di.StaticToken
 import com.template.android.core.network.di.BaseUrl
 import dagger.Module
 import dagger.Provides
@@ -14,4 +15,8 @@ object AppModule {
     @Provides
     @BaseUrl
     fun provideBaseUrl(): String = BuildConfig.BASE_URL
+
+    @Provides
+    @StaticToken
+    fun provideStaticApiKey(): String = BuildConfig.API_KEY
 }

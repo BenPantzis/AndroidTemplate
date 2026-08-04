@@ -17,7 +17,10 @@ import com.template.android.core.ui.component.LoadingIndicator
 import com.template.android.core.ui.component.ScreenScaffold
 
 @Composable
-fun HomeScreen(viewModel: HomeViewModel = hiltViewModel()) {
+fun HomeScreen(
+    onItemClick: (String) -> Unit = {},
+    viewModel: HomeViewModel = hiltViewModel(),
+) {
     val uiState by viewModel.uiState.collectAsStateWithLifecycle()
     val snackbarHostState = remember { SnackbarHostState() }
 
@@ -36,8 +39,9 @@ fun HomeScreen(viewModel: HomeViewModel = hiltViewModel()) {
     )
 }
 
+@Suppress("UnusedParameter")
 @Composable
-private fun HomeContent(
+internal fun HomeContent(
     uiState: HomeUiState,
     onAction: (HomeAction) -> Unit,
     snackbarHostState: SnackbarHostState = remember { SnackbarHostState() },

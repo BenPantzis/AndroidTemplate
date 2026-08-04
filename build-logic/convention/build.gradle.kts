@@ -22,6 +22,7 @@ dependencies {
     compileOnly(libs.android.gradlePlugin)
     compileOnly(libs.kotlin.gradlePlugin)
     compileOnly(libs.ksp.gradlePlugin)
+    compileOnly(libs.detekt.gradlePlugin)
 }
 
 gradlePlugin {
@@ -41,6 +42,10 @@ gradlePlugin {
         register("androidHilt") {
             id = "template.android.hilt"
             implementationClass = "HiltConventionPlugin"
+        }
+        register("detekt") {
+            id = "template.detekt"
+            implementationClass = "DetektConventionPlugin"
         }
     }
 }

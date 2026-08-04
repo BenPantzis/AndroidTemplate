@@ -6,6 +6,7 @@ import kotlinx.coroutines.test.TestDispatcher
 import kotlinx.coroutines.test.UnconfinedTestDispatcher
 
 @OptIn(ExperimentalCoroutinesApi::class)
+@Suppress("FunctionNaming")
 fun TestAppDispatchers(
     dispatcher: TestDispatcher = UnconfinedTestDispatcher(),
 ): AppDispatchers = AppDispatchers(

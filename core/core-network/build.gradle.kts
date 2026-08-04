@@ -15,6 +15,8 @@ android {
 }
 
 dependencies {
+    implementation(project(":core:core-common"))
+    implementation(catalog.findLibrary("coroutines-android").get())
     implementation(catalog.findLibrary("retrofit-core").get())
     implementation(catalog.findLibrary("retrofit-gson").get())
     implementation(catalog.findLibrary("okhttp-core").get())

@@ -23,11 +23,20 @@ jobs:
       - name: Set up Gradle
         uses: gradle/actions/setup-gradle@v3
 
+      - name: Run Detekt
+        run: ./gradlew detektAll
+
       - name: Build debug APK (dev flavor)
         run: ./gradlew assembleDevDebug
 
       - name: Run unit tests (dev flavor)
         run: ./gradlew testDevDebugUnitTest
+
+      # Verifies screenshot tests against committed golden images.
+      # Before this step passes, run `./gradlew recordRoborazziDebug` locally,
+      # commit the generated files from src/test/screenshots/, then push.
+      - name: Verify screenshot tests
+        run: ./gradlew verifyRoborazziDebug
 
       - name: Upload test results
         if: always()
@@ -35,3 +44,10 @@ jobs:
         with:
           name: test-results
           path: '**/build/reports/tests/'
+
+      - name: Upload screenshot diffs on failure
+        if: failure()
+        uses: actions/upload-artifact@v4
+        with:
+          name: screenshot-diffs
+          path: '**/build/outputs/roborazzi/'

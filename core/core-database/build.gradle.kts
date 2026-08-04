@@ -16,8 +16,18 @@ ksp {
     arg("room.incremental", "true")
 }
 
+android {
+    testOptions {
+        unitTests {
+            isIncludeAndroidResources = true
+        }
+    }
+}
+
 dependencies {
     implementation(catalog.findLibrary("room-runtime").get())
     implementation(catalog.findLibrary("room-ktx").get())
     ksp(catalog.findLibrary("room-compiler").get())
+
+    testImplementation(catalog.findLibrary("robolectric").get())
 }
